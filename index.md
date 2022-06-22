@@ -1,6 +1,6 @@
 ## 猿文档
 
-[POD创建使用](https://github.com/xiaoxin1992/xiaoxin1992.github.io/edit/main/pod/pod.md)
+[POD创建使用](pod/pod.md)
 
 ### Markdown
 
