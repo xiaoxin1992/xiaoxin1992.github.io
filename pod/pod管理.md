@@ -139,17 +139,17 @@ spec:
   hostIPC: true   # 共享主机的IPC名称空间
 ```
 #### 设置 Pod 对象的安全上下文
-[x] 基于用户 ID (UID)和组 ID (GID)控制访问对象(如文件)时的权限
+- 基于用户 ID (UID)和组 ID (GID)控制访问对象(如文件)时的权限
 
-[x] 以特权或非特权的方式运行
+- 以特权或非特权的方式运行
 
-[x] 通过 Linux Capabilities 为其提供部分特权 
+- 通过 Linux Capabilities 为其提供部分特权 
 
-[x] 基于 Seccomp过滤进程的系统调用
+- 基于 Seccomp过滤进程的系统调用
 
-[x] 基于 SELinux 的安全标签
+- 基于 SELinux 的安全标签
 
-[x] 是否能够进行权限升级 
+- 是否能够进行权限升级 
 
 Pod对象的安全上下文定义在 spec.securityContext字段中, 容器的安全上线文规则在spec.containers[].securityContext字段中 
 
@@ -225,13 +225,13 @@ NAME                       READY   STATUS    RESTARTS   AGE   ENV
 pod-with-securitycontext   1/1     Running   0          24m   
 ```
 基于集合关系的标签选择器支持 in、 notin和 exists三种操作符，它们的使用格式及意 义具体如下
-[x]  KEY in (VALUE!, VALUE2，...):              指定的键名的值存在于给定的列表中即满足条件
+-  KEY in (VALUE!, VALUE2，...):              指定的键名的值存在于给定的列表中即满足条件
 
-[x]  KEY notin (V ALUE! , VALUE2，...):         指定的键名的值不存在于给定的列表中即满足条件
+-  KEY notin (V ALUE! , VALUE2，...):         指定的键名的值不存在于给定的列表中即满足条件
 
-[x]  KEY:                                       所有存在此键名标签的资源
+-  KEY:                                       所有存在此键名标签的资源
 
-[x]  !KEY:                                      所有不存在此键名标签的资源
+-  !KEY:                                      所有不存在此键名标签的资源
 
 ```shell
 # kubectl get pods  -l "env in (test, dev)" -l env
@@ -246,9 +246,9 @@ pod-with-labels   1/1     Running   0          11m
 ```
 
 kubernets中许多资源对象都必须以标签选择器的方式来关联到Pod资源对象例如: Service、Deployment、ReplicaSet类型的资源, 它们在spec字段中嵌套使用`selector`字段，通过 `matchLabels`来制定标签选择器, 有的还支持 `matchExpressions`构造复杂的标签选择机制 
-[x] matchLabels:通过直接给定键值对来指定标签选择器 
+- matchLabels:通过直接给定键值对来指定标签选择器 
 
-[x]基于表达式指定的标签选择器列表，每个选择器都形如“{key:阻 Y_NAME, operator: OPERATOR, values: [VALUE !, VALUE2，...]}”，选择器列表 间为“逻辑 与”关系 ;使用 In 或 Notln 操作符时， 其 values 不强制要求为非空的字 符串列表，而使用 Exists 或DostNotExist 时，其 values 必须为空 
+-基于表达式指定的标签选择器列表，每个选择器都形如“{key:阻 Y_NAME, operator: OPERATOR, values: [VALUE !, VALUE2，...]}”，选择器列表 间为“逻辑 与”关系 ;使用 In 或 Notln 操作符时， 其 values 不强制要求为非空的字 符串列表，而使用 Exists 或DostNotExist 时，其 values 必须为空 
 
 实例
 ```yaml
@@ -361,9 +361,9 @@ spec:
 ```
 
 ##### 生命周期钩子(postStart、preStop)
-[x] postStart 用于容器创建完成后立即执行的钩子， 不过不一定会于容器中的ENTRYPOINT之前运行
+- postStart 用于容器创建完成后立即执行的钩子， 不过不一定会于容器中的ENTRYPOINT之前运行
 
-[x] preStop 于容器终止操作之前离职运行的钩子，它是以同步的方式调用，因此在其完成之前会阻塞删除容器的操作的调用
+- preStop 于容器终止操作之前离职运行的钩子，它是以同步的方式调用，因此在其完成之前会阻塞删除容器的操作的调用
 
 钩子实现的方式有`Exec`和`HTTP`， 前一种时间触发时直接在当前容器中运行由用户自定义的命令， 后一种则是当前容器向某个URL发起HTTP请求
 
@@ -384,11 +384,11 @@ spec:
 ```
 ##### 容器探测
 kubernets支持三种Pod探测器
-[x] ExecAction        在容器中执行一个命令，根据返回状态码判断，属于Exec探测， 状态为0表示成功， 否则为不健康状态
+- ExecAction        在容器中执行一个命令，根据返回状态码判断，属于Exec探测， 状态为0表示成功， 否则为不健康状态
 
-[x] TCPSocketAction   通过与容器的某TCP端口尝试建立连接进行诊断,端口能够连接上则表示正常，否则为不健康状态
+- TCPSocketAction   通过与容器的某TCP端口尝试建立连接进行诊断,端口能够连接上则表示正常，否则为不健康状态
 
-[x] HTTPGetAction     向容器的IP地址发送HTTP GET请求进行诊断，响应码为2xx或3xx表示成功，否则为失败
+- HTTPGetAction     向容器的IP地址发送HTTP GET请求进行诊断，响应码为2xx或3xx表示成功，否则为失败
 
 ##### 检测类型
 1.  存活检测    是用于判断容器是否正常，如果不正常容器会根据`restartPolicy`策略进行重启, 没有定义存活检测的容器默认是Success状态
@@ -417,10 +417,184 @@ kubernets支持三种Pod探测器
 
 #### Pod存活性探测
 kubernets支持三种Pod探测器
-[x] ExecAction        在容器中执行一个命令，根据返回状态码判断，属于Exec探测， 状态为0表示成功， 否则为不健康状态
+- ExecAction        在容器中执行一个命令，根据返回状态码判断，属于Exec探测， 状态为0表示成功， 否则为不健康状态
 
-[x] TCPSocketAction   通过与容器的某TCP端口尝试建立连接进行诊断,端口能够连接上则表示正常，否则为不健康状态
+- TCPSocketAction   通过与容器的某TCP端口尝试建立连接进行诊断,端口能够连接上则表示正常，否则为不健康状态
 
-[x] HTTPGetAction     向容器的IP地址发送HTTP GET请求进行诊断，响应码为2xx或3xx表示成功，否则为失败
+- HTTPGetAction     向容器的IP地址发送HTTP GET请求进行诊断，响应码为2xx或3xx表示成功，否则为失败
 
 
+存活探测通过 `spec.containers.livenessProbe`定义
+
+##### exec探针
+通过 `spec.containers.livenessProbe.exec`定义
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: liveness-exec
+  name: liveness-exec
+spec:
+  containers:
+  - name: liveness-exec-demo
+    image: busybox
+    args: ["/bin/sh", "-c", "touch /tmp/healthy;sleep 80;rm -rf /tmp/healthy;sleep 600"]
+    livenessProbe:
+      exec:
+        command: ["test", "-e", "/tmp/healthy"]
+```
+
+
+##### HTTP探针
+通过 `spec.containers.livenessProbe.httpGet`定义
+-  host <string>  请求主机地址， 默认Pod 的IP地址， 也可以是httpHeaders中使用的`Host:`来定义
+- port <string>  请求端口，必须选字段
+- httpHeaders <[]Object> 自定义的请求报文首部 path <string>  请求HTTP资源路径， URL PATH
+- scheme 协议 只能是HTTP或HTTPS 默认HTTP
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: liveness-http
+  name: liveness-http
+spec:
+  containers:
+  - name: liveness-http-demo
+    image: nginx:1.12-alpine
+    ports:
+    - name: http   # 暴露名称
+      containerPort: 80
+    lifecycle:
+      postStart:
+        exec:
+          command: ["/bin/sh", "-c", "echo Healthy > /usr/share/nginx/html/healthz"]
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: http   # 使用暴露端口名称
+        scheme: HTTP
+```
+
+##### TCP探针
+通过 `spec.containers.livenessProbe.tcpScoket`定义
+- host <string> 请求连接的目标IP地址， 默认是POD的IP
+- port <string> 请求连接的目标端口， 必选字段
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: liveness-tcp
+  name: liveness-tcp
+spec:
+  containers:
+  - name: liveness-tcp-demo
+    image: nginx:1.12-alpine
+    ports:
+    - name: http   # 暴露名称
+      containerPort: 80
+    livenessProbe:
+      tcpSocket:
+        port: http   # 使用暴露端口名称
+```
+
+###### 存活性探测属性
+额外属性: delay、timeout、period、success、failure
+这些属性可通过 `spec.containers.livenessProbe`字段设置
+- initialDelaySeconds <integer> 存活性探测延迟时长， 容器启动多久以后开始探测， 默认0秒
+- timeoutSeconds <integer>  存活探测的超时时长， 显示timeout属性 默认是1秒最小值也是1秒
+- periodSeconds <integer> 存活探测频率， 显示period属性， 默认10s最小值1s过高的频率会对Pod带来额外较大的开销， 过低有会使得错误反应不及时
+- successThreshold <integer> 处于失败状态时， 探测至少多少次连续的成功才会被认为是通过检测的， 显示为success属性， 默认值1，最小值1
+- failureThreshold 处于成功状态时，探测多少次被视为检测失败， 是failure属性， 默认值3， 最小值1
+  
+配置实例
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: liveness-http
+  name: liveness-http
+spec:
+  containers:
+  - name: liveness-http-demo
+    image: nginx:1.12-alpine
+    ports:
+    - name: http   # 暴露名称
+      containerPort: 80
+    lifecycle:
+      postStart:
+        exec:
+          command: ["/bin/sh", "-c", "echo Healthy > /usr/share/nginx/html/healthz"]
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: http   # 使用暴露端口名称
+        scheme: HTTP
+      initialDelaySeconds: 5
+      timeoutSeconds: 2
+      periodSeconds: 5
+      successThreshold: 1
+      failureThreshold: 2
+```
+
+
+##### Pod就绪性探测
+容器通常需要一段时间才能初始化完成，例如加载配置， 启动应用等，如果在此阶段提供服务，则会导致用户无法正常使用， 使用就绪性探测可以解决这个问题
+默认的就绪性探测周期为10秒中一次, 它也支持Exec, HTTP GET 和TCP Socket
+
+探测失败时，就 绪性探测不会杀死或重启容器以保证其健康性，而是通知其尚未就绪，并触发依赖于其就 绪状态的操作(例如，从 Service对象中移除此 Pod对象)以确保不会有客户端请求接入此 Pod 对象 。 不过，即便是在运行过程中， Pod 就绪性探测依然有其价值所在，例如 Pod A 依 赖到的 Pod B 因网络故障等原因而不可用时， Pod A 上的服务应该转为未就绪状态，以免无 法向客户端提供完整的响应 
+
+实例：
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: redaliness-exec
+  name: readliness-exec
+spec:
+  containers:
+  - name: readliness-demo
+    image: busybox
+    args: ["/bin/sh", "-c", "while true;do rm -f /tmp/ready;sleep 30;touch /tmp/ready;sleep 300;done"]
+    readinessProbe:
+      exec:
+        command: ["test", "-e", "/tmp/ready"]
+      initialDelaySeconds: 5
+      periodSeconds: 5
+```
+
+#### 资源限制
+Pod中可以对CPU和内存等资源进行限制， 使用`resources.requesets`最小可用资源 `resources.limits`限制最大可用资源
+
+实例：
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: stress-pod
+spec:
+  containers:
+  - name: stress
+    image: ikubernetes/stress-ng
+    command: ["/usr/bin/stress-ng", "-m 1", "-c 1", "-metrics-brief"]
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "200m"
+      limits:
+        memory: "128Mi"
+        cpu: "250m"
+```
+
+
+
+kubernets允许节点资源对limit的过载使用，但是当资源不够用的时候则会按照一下顺序终止Pod对象
+- 优先终止没有任何requests和limits属性的Pod
+- 其次是设置至少一个cpu或内存的requests属性的
+- 最后是requests和limits属性都设置的，这类Pod资源具有最高优先级
