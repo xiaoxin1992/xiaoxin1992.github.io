@@ -1,6 +1,7 @@
 ## 猿文档
 
 [POD使用](pod/pod管理.md)
+[控制器](pod/Pod控制器/控制器.md)
 
 ### Markdown
 
